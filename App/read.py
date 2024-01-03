@@ -56,9 +56,10 @@ def analizar_documento(doc_path):
                     map["Reflexion"] = cell.text
                     #print(f"Table {i}, Row {j}, Cell {k}: {cell.text}")
 
-    json_acentos = json.dumps(map, indent = 4)
-    json_sin_acentos = quitar_acentos_en_json(json_acentos)
-    print(json_sin_acentos)
+    #json_acentos = json.dumps(map, indent = 4)
+    #json_sin_acentos = quitar_acentos_en_json(json_acentos)
+    #print(json_sin_acentos)
+    return map
 
 
 def quitar_acentos(texto):
