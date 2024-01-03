@@ -8,11 +8,13 @@ import os
 app = Flask(__name__)
 api = Api(app)
 
+# Retorna el contenido del archivo
 class Devocional(Resource):
     def get(self):
         resp = analizar_documento('template2.docx')
         return jsonify(resp)
-    
+
+# Retorna los datos de prueba (52 semanas)
 class Mocks(Resource):
     def get(self):
         page = request.args.get('page', default = 1, type = int)
