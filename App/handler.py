@@ -11,7 +11,7 @@ api = Api(app)
 # Retorna el contenido del archivo
 class Devocional(Resource):
     def get(self):
-        resp = analizar_documento('template2.docx')
+        resp = analizar_documento('template4.docx')
         return jsonify(resp)
 
 # Retorna los datos de prueba (52 semanas)
