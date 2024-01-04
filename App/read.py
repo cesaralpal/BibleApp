@@ -5,27 +5,31 @@ import json
 def analizar_documento(doc_path):
     # Abre el documento de Word
     doc = Document(doc_path)
-    map = {}   
-    reflexion_tema = False 
-    # Imprime el texto de cada párrafo en el documento
+    map = {}
+    parrafos = []
+    # Se eliminan los espacios en blanco para no tener problemas con los saltos de línea
     for index, para in enumerate(doc.paragraphs):
-        print(f"row {index}: {para.text}")
         if para.text == "":
             continue
+        else:
+            parrafos.append(para.text)
+
+    for index, para in enumerate(parrafos):
+        #print(f"row {index}: {para}")
         if index == 0:
-            map["Semana"] = para.text
-        elif index == 10:
-            map["Titulo Video"] = para.text
-        elif index == 11:
-            map["Video Link"] = para.text
-        elif index == 12:
-            map["Descripcion Video"] = para.text
-        elif index == 14:
-            map["Titulo Audio"] = para.text
-        elif index == 16:         
-            map["Descripcion Audio"] = para.text
-        elif index == 17:
-            map["SoundCloud Link"] = para.text
+            map["Semana"] = para
+        elif index == 3:
+            map["Titulo Video"] = para
+        elif index == 4:
+            map["Video Link"] = para
+        elif index == 5:
+            map["Descripcion Video"] = para
+        elif index == 6:
+            map["Titulo Audio"] = para
+        elif index == 8:         
+            map["Descripcion Audio"] = para
+        elif index == 9:
+            map["SoundCloud Link"] = para
 
 
 
