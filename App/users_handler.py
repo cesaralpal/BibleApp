@@ -9,7 +9,7 @@ def update_token():
     token = request.json.get('token')
 
     # Aquí, actualiza el token en tu base de datos
-    conn = psycopg2.connect("dbname=your_db user=your_user password=your_password")
+    conn = psycopg2.connect("dbname=postgres user=postgres password=12345678")
     cursor = conn.cursor()
     cursor.execute("UPDATE usuarios SET fcm_token = %s WHERE id = %s", (token, user_id))
     conn.commit()
