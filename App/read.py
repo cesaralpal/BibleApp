@@ -1,5 +1,6 @@
 from docx import Document
 from unidecode import unidecode
+from insert import insertar_datos
 import json
 
 def analizar_documento(doc_path):
@@ -17,19 +18,19 @@ def analizar_documento(doc_path):
     for index, para in enumerate(parrafos):
         #print(f"row {index}: {para}")
         if index == 0:
-            map["Semana"] = para
+            map["semana"] = para
         elif index == 3:
-            map["Titulo Video"] = para
+            map["titulo_video"] = para
         elif index == 4:
-            map["Video Link"] = para
+            map["video_link"] = para
         elif index == 5:
-            map["Descripcion Video"] = para
+            map["descripcion_video"] = para
         elif index == 6:
-            map["Titulo Audio"] = para
+            map["titulo_audio"] = para
         elif index == 8:         
-            map["Descripcion Audio"] = para
+            map["descripcion_audio"] = para
         elif index == 9:
-            map["SoundCloud Link"] = para
+            map["soundcloud_link"] = para
 
 
 
@@ -43,62 +44,63 @@ def analizar_documento(doc_path):
                 if i==0 and j==0 and k==0: 
                     #print("Titulo:")
                     #print(cell.text)
-                    map["Titulo"] = cell.text
+                    map["titulo"] = cell.text
                     #print(f"Table {i}, Row {j}, Cell {k}: {cell.text}")
 
                 elif i==0 and j==1 and k==0:
                     #print("Tema:")
                     #print(cell.text)
-                    map["Tema"] = cell.text
+                    map["tema"] = cell.text
                     #print(f"Table {i}, Row {j}, Cell {k}: {cell.text}")
 
                 elif i==0 and j==2 and k==0: 
                     #print("Instrucciones:")
                     #print(cell.text)
-                    map["Instrucciones"] = cell.text
+                    map["instrucciones"] = cell.text
                     #print(f"Table {i}, Row {j}, Cell {k}: {cell.text}")
 
                 # Tabla 1, Devocional, Reflexion, Capitulo, *Biografia
                 elif i==1 and j==3 and k==0: # Tabla 1, fila 3, celda 0
                     #print("Devocional:")
                     #print(cell.text)
-                    map["Devocional"] = cell.text
+                    map["devocional"] = cell.text
                     #print(f"Table {i}, Row {j}, Cell {k}: {cell.text}")
 
                 elif i==1 and j==4 and k==0: # Tabla 1, fila 2, celda 0
                     #print("Reflexion:")
                     #print(cell.text)
-                    map["Reflexion"] = cell.text   
+                    map["reflexion"] = cell.text   
                     #print(f"Table {i}, Row {j}, Cell {k}: {cell.text}")
 
                 elif i==1 and j==5 and k==0: 
                     #print("Capitulo:")
                     #print(cell.text)
-                    map["Capitulo"] = cell.text   
+                    map["capitulo"] = cell.text   
                     #print(f"Table {i}, Row {j}, Cell {k}: {cell.text}")
 
                 elif i==1 and j==6 and k==0: 
                     #print("Lectura:")
                     #print(cell.text)
-                    map["Lectura"] = cell.text   
+                    map["lectura"] = cell.text   
                     #print(f"Table {i}, Row {j}, Cell {k}: {cell.text}")
 
                 elif i==1 and j==8 and k==0: 
                     #print("Biografia:")
                     #print(cell.text)
-                    map["Biografia"] = cell.text   
+                    map["biografia"] = cell.text   
                     #print(f"Table {i}, Row {j}, Cell {k}: {cell.text}")
                 elif i==2 and j==1 and k==0:
                     #print("Trivia:")
                     #print(cell.text)
                     trivia= cell.text
-                    map["Trivia"] = extract_questions_to_map(trivia)
+                    map["trivia"] = extract_questions_to_map(trivia)
                     #print(f"Table {i}, Row {j}, Cell {k}: {cell.text}")
 
     #json_acentos = json.dumps(map, indent = 4)
     #json_sin_acentos = quitar_acentos_en_json(json_acentos)
     #print(json_sin_acentos)
     #print(map)
+    insertar_datos(map)
     return map
 
 
