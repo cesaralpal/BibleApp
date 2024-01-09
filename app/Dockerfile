@@ -14,7 +14,12 @@ RUN pip install --trusted-host pypi.python.org -r requirements.txt
 EXPOSE 80
 
 # Define environment variable
-ENV NAME World
+# Add these environment variables to the Dockerfile
+ENV PGUSER=devocasademipadre_user
+ENV PGPASSWORD=1Oegrjyg9wOSxa3mH8tswFl74BSciK0w
+ENV PGHOST=dpg-cme997mn7f5s73fomd50-a.oregon-postgres.render.com
+ENV PGPORT=5432
+ENV PGDATABASE=devocasademipadre
 
 # Run app.py when the container launches
-CMD ["python", "app.py"]
+CMD ["python", "app.py"]ß
