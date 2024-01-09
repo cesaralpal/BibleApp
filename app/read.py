@@ -4,6 +4,18 @@ from insert import insertar_datos
 #from firebase import send_push_notifications
 import psycopg2
 import json
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get PostgreSQL connection details from environment variables
+PG_USER = os.getenv("PGUSER")
+PG_PASSWORD = os.getenv("PGPASSWORD")
+PG_HOST = os.getenv("PGHOST")
+PG_PORT = os.getenv("PGPORT")
+PG_DATABASE = os.getenv("PGDATABASE")
 
 def analizar_documento(doc_path):
     # Abre el documento de Word
@@ -149,10 +161,11 @@ analizar_documento(ruta_del_documento)
 def obtener_devocionales(offset=0, limite=10):
     # Conexión a la base de datos
     conn = psycopg2.connect(
-        dbname="postgres", 
-        user="postgres", 
-        password="12345678", 
-        host="localhost"
+        dbname=PG_DATABASE,
+        user=PG_USER,
+        password=PG_PASSWORD,
+        host=PG_HOST,
+        port=PG_PORT
     )
     cur = conn.cursor()
 
