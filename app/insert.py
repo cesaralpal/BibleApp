@@ -2,16 +2,29 @@ import psycopg2
 import json
 from psycopg2 import sql
 from datetime import datetime
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get PostgreSQL connection details from environment variables
+PG_USER = os.getenv("PGUSER")
+PG_PASSWORD = os.getenv("PGPASSWORD")
+PG_HOST = os.getenv("PGHOST")
+PG_PORT = os.getenv("PGPORT")
+PG_DATABASE = os.getenv("PGDATABASE")
 
 def insertar_datos(map):
     conn = psycopg2.connect(
-        dbname="postgres", 
-        user="postgres", 
-        password="12345678", 
-        host="localhost"
+        dbname=PG_DATABASE,
+        user=PG_USER,
+        password=PG_PASSWORD,
+        host=PG_HOST,
+        port=PG_PORT
     )
     cur = conn.cursor()
-
+    
     map['fecha'] = datetime.now().date()
     map['trivia'] = json.dumps(map['trivia'])
 

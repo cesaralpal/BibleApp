@@ -22,4 +22,4 @@ ENV PGPORT=5432
 ENV PGDATABASE=devocasademipadre
 
 # Run app.py when the container launches
-CMD ["python", "app.py"]ß
+CMD ["python", "app.py"]
