@@ -2,7 +2,6 @@ from docx import Document
 from unidecode import unidecode
 from insert import insertar_datos
 #from firebase import send_push_notifications
-import psycopg2
 import json
 import os
 from dotenv import load_dotenv
@@ -157,32 +156,3 @@ def extract_questions_to_map(text):
 # Reemplaza 'ruta_del_documento.docx' con la ruta de tu propio documento de Word
 ruta_del_documento = 'template4.docx'
 analizar_documento(ruta_del_documento)
-
-def obtener_devocionales(offset=0, limite=10):
-    # Conexión a la base de datos
-    conn = psycopg2.connect(
-        dbname=PG_DATABASE,
-        user=PG_USER,
-        password=PG_PASSWORD,
-        host=PG_HOST,
-        port=PG_PORT
-    )
-    cur = conn.cursor()
-
-    cur.execute("""
-        SELECT * FROM devocionales
-        ORDER BY fecha DESC
-        OFFSET %s LIMIT %s
-    """, (offset, limite))
-
-    registros = cur.fetchall()
-
-    columnas = [desc[0] for desc in cur.description]
-    devocionales = []
-    for registro in registros:
-        devocionales.append(dict(zip(columnas, registro)))
-
-    cur.close()
-    conn.close()
-
-    return devocionales
