@@ -19,16 +19,16 @@ class Devocional(Resource):
 # Retorna los devocionales que hay en la base de datos
 class Devocionales(Resource):
     def get(self):
-        page = request.args.get('page', default = 1, type = int)
-        per_page = request.args.get('per_page', default = 10, type = int)
-        key = request.args.get('key', default = None, type = str)
-        resp = obtener_devocionales(key,page, per_page)
+        page = request.args.get('page', default=0, type=int)
+        per_page = request.args.get('per_page', default=10, type=int)
+        filters = {key: value for key, value in request.args.items() if key not in ['page', 'per_page']}
+        resp = obtener_devocionales(filters, (page - 1) * per_page, per_page)
         return jsonify(resp)
 
 # Retorna los datos de prueba (52 semanas)
 class Mocks(Resource):
     def get(self):
-        page = request.args.get('page', default = 1, type = int)
+        page = request.args.get('page', default = 0, type = int)
         per_page = request.args.get('per_page', default = 10, type = int)
         resp = respuestas_mocks(page, per_page)
         return jsonify(resp)
@@ -36,7 +36,7 @@ class Mocks(Resource):
 # Retorna las trivias que hay en la base de datos
 class Trivia(Resource):
     def get(self):
-        page = request.args.get('page', default = 1, type = int)
+        page = request.args.get('page', default = 0, type = int)
         per_page = request.args.get('per_page', default = 10, type = int)
         resp = obtener_trivias(page, per_page)
         return jsonify(resp)
@@ -44,7 +44,7 @@ class Trivia(Resource):
 # Retorna los podcasts que hay en la base de datos
 class Podcast(Resource):
     def get(self):
-        page = request.args.get('page', default = 1, type = int)
+        page = request.args.get('page', default = 0, type = int)
         per_page = request.args.get('per_page', default = 10, type = int)
         resp = obtener_podcasts(page, per_page)
         return jsonify(resp)
@@ -78,15 +78,7 @@ class DevocionalById(Resource):
             return jsonify(resp)
         except ValueError:
             return "Invalid UUID", 400
-        
-# Retorna los devocionales que encuentre por tema
-class DevocionalesByTema(Resource):
-    def get(self, tema):
-        page = request.args.get('page', default = 1, type = int)
-        per_page = request.args.get('per_page', default = 10, type = int)
-        resp = obtener_devocionales(page, per_page, tema)
-        return jsonify(resp)
-        
+              
 api.add_resource(Devocional, '/devocional')
 api.add_resource(Mocks, '/mocks')
 api.add_resource(Devocionales, '/devocionales-list')
