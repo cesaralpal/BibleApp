@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_restful import Resource, Api
-from read import analizar_documento, obtener_devocionales
+from read import analizar_documento
 from mocks import respuestas_mocks
 from search import obtener_devocionales, obtener_trivias, obtener_podcasts, obtener_podcast_por_uuid, obtener_trivia_por_uuid, obtener_devocional_por_uuid
 import os

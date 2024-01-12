@@ -62,7 +62,7 @@ def insertar_datos(map):
           %(lectura)s, 
           %(biografia)s,
           %(fecha)s
-          )
+          ) RETURNING id
     """)
 
     cur.execute(query, map)
@@ -73,13 +73,29 @@ def insertar_datos(map):
     # Después de cur.execute(query, map)
     devocional_id = cur.fetchone()[0]
 
+    map['devocional_id'] = devocional_id
+
     # Luego, insertar la trivia usando el devocional_id
     trivia_query = sql.SQL("""
-    INSERT INTO trivia (devocional_id, trivia) 
-    VALUES (%(devocional_id)s, %(trivia)s)
+    INSERT INTO trivia (devocional_id, trivia, fecha) 
+    VALUES (%(devocional_id)s, %(trivia)s, %(fecha)s)
+    RETURNING id
     """)
 
     cur.execute(trivia_query, map)
+    conn.commit()
+
+    trivia_id = cur.fetchone()[0]
+
+    map['trivia_id'] = trivia_id
+
+    # Luego, insertar el id de la trivia en la tabla devocionales
+    devocional_trivia_query = sql.SQL("""
+    UPDATE devocionales
+    SET trivia_id = %(trivia_id)s
+    WHERE id = %(devocional_id)s
+    """)
+    cur.execute(devocional_trivia_query, map)
     conn.commit()
 
     cur.close()

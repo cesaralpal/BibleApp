@@ -99,7 +99,7 @@ def obtener_trivia_por_uuid(trivia_uuid):
     cur = conn.cursor()
 
     cur.execute("""
-        SELECT * FROM trivias
+        SELECT * FROM trivia
         WHERE id = %s
     """, (trivia_uuid,))
 
@@ -127,7 +127,7 @@ def obtener_podcast_por_uuid(podcast_uuid):
     cur = conn.cursor()
 
     cur.execute("""
-        SELECT * FROM podcasts
+        SELECT * FROM podcast
         WHERE id = %s
     """, (podcast_uuid,))
 
@@ -140,3 +140,65 @@ def obtener_podcast_por_uuid(podcast_uuid):
     conn.close()
 
     return podcast
+
+# Obtiene las trivias de la base de datos
+def obtener_trivias(offset=0, limite=10):
+    # Conexión a la base de datos
+    conn = psycopg2.connect(
+        dbname=PG_DATABASE,
+        user=PG_USER,
+        password=PG_PASSWORD,
+        host=PG_HOST,
+        port=PG_PORT
+    )
+
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT * FROM trivia
+        ORDER BY fecha DESC
+        OFFSET %s LIMIT %s
+    """, (offset, limite))
+
+    registros = cur.fetchall()
+
+    columnas = [desc[0] for desc in cur.description]
+    trivias = []
+    for registro in registros:
+        trivias.append(dict(zip(columnas, registro)))
+
+    cur.close()
+    conn.close()
+
+    return trivias
+
+# Obtiene los podcasts de la base de datos
+def obtener_podcasts(offset=0, limite=10):
+    # Conexión a la base de datos
+    conn = psycopg2.connect(
+        dbname=PG_DATABASE,
+        user=PG_USER,
+        password=PG_PASSWORD,
+        host=PG_HOST,
+        port=PG_PORT
+    )
+
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT * FROM podcast
+        ORDER BY fecha DESC
+        OFFSET %s LIMIT %s
+    """, (offset, limite))
+
+    registros = cur.fetchall()
+
+    columnas = [desc[0] for desc in cur.description]
+    podcasts = []
+    for registro in registros:
+        podcasts.append(dict(zip(columnas, registro)))
+
+    cur.close()
+    conn.close()
+
+    return podcasts

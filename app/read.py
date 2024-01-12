@@ -154,5 +154,5 @@ def extract_questions_to_map(text):
     return questions_map
 
 # Reemplaza 'ruta_del_documento.docx' con la ruta de tu propio documento de Word
-ruta_del_documento = 'template4.docx'
-analizar_documento(ruta_del_documento)
+#ruta_del_documento = 'template4.docx'
+#analizar_documento(ruta_del_documento)
